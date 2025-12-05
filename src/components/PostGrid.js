@@ -20,9 +20,7 @@ const PostGrid = ({ selectedPosts, setSelectedPosts, posts }) => {
     );
   };
 
-  const handleImageError = (postId) => {
-    setImageErrors(prev => ({ ...prev, [postId]: true }));
-  };
+
 
   const openModal = (post) => {
     setModalPost(post);
