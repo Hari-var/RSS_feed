@@ -1,0 +1,146 @@
+.selected-footer {
+  position: fixed;
+  bottom: 0;
+  left: 200px;
+  right: 0;
+  background: #f8f9fa;
+  border-top: 1px solid #ddd;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  z-index: 999;
+  max-height: 120px;
+  overflow-x: auto;
+  transition: left 0.3s ease;
+}
+
+.selected-footer.sidebar-collapsed {
+  left: 70px;
+}
+
+.selected-tiles {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+
+.selected-tiles::-webkit-scrollbar {
+  height: 6px;
+}
+
+.selected-tiles::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.selected-tiles::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 3px;
+}
+
+.selected-tiles::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+.selected-tile {
+  position: relative;
+  width: 200px;
+  height: 80px;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.selected-tile img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+.footer-fallback {
+  width: 60px;
+  height: 60px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 10px;
+  color: #666;
+  line-height: 1.2;
+  padding: 4px;
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.footer-title {
+  flex: 1;
+  margin-left: 10px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.scrolling-text {
+  display: inline-block;
+  font-size: 12px;
+  color: #333;
+  font-weight: 500;
+  transition: transform 0.3s ease;
+}
+
+.selected-tile:hover .scrolling-text {
+  animation: scroll-text 8s linear infinite;
+}
+
+@keyframes scroll-text {
+  0% { transform: translateX(40%); }
+  100% { transform: translateX(-100%); }
+}
+
+
+
+.remove-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  font-size: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.send-email-btn {
+  background: #0066cc;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.send-email-btn:hover {
+  background: #0052a3;
+}
