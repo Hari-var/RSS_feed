@@ -1,6 +1,6 @@
 .post-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(350px, 0.7fr));
   gap: 20px;
   padding: 20px;
   max-height: calc(100vh - 120px);
@@ -13,8 +13,8 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   overflow: hidden;
   transition: transform 0.2s;
-  width: 300px;
-  height: 200px;
+  width: 350px;
+  height: 240px;
   justify-self: center;
 }
 
@@ -24,7 +24,7 @@
 
 .post-image {
   position: relative;
-  height: 200px;
+  height: 240px;
   width: 100%;
   overflow: hidden;
   cursor: pointer;
