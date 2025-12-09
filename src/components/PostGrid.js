@@ -4,7 +4,6 @@ import './PostGrid.css';
 
 const PostGrid = ({ selectedPosts, setSelectedPosts, posts }) => {
   const [modalPost, setModalPost] = useState(null);
-  const [imageErrors, setImageErrors] = useState({});
 
   const truncateDescription = (text) => {
     const words = text.split(' ');
@@ -18,10 +17,6 @@ const PostGrid = ({ selectedPosts, setSelectedPosts, posts }) => {
         ? prev.filter(postId => postId !== id)
         : [...prev, id]
     );
-  };
-
-  const handleImageError = (postId) => {
-    setImageErrors(prev => ({ ...prev, [postId]: true }));
   };
 
   const openModal = (post) => {
@@ -41,10 +36,8 @@ const PostGrid = ({ selectedPosts, setSelectedPosts, posts }) => {
               className="post-image" 
               onClick={() => openModal(post)}
               style={{
-                backgroundImage: (!imageErrors[post.id] && post.image_url) 
-                  ? `url(${post.image_url})` 
-                  : 'none',
-                backgroundColor: (!imageErrors[post.id] && post.image_url) ? 'transparent' : '#f5f5f5'
+                backgroundImage: post.image_url ? `url(${post.image_url})` : 'none',
+                backgroundColor: post.image_url ? 'transparent' : '#f5f5f5'
               }}
             >
               <input 
