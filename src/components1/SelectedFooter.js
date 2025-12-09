@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './SelectedFooter.css';
 
-const SelectedFooter = ({ selectedPosts, onRemovePost, onSendEmail, sidebarCollapsed, posts, sending }) => {
+const SelectedFooter = ({ selectedPosts, onRemovePost, onSendEmail, sidebarCollapsed, posts }) => {
   const [imageErrors, setImageErrors] = useState({});
   const selectedData = posts.filter(post => selectedPosts.includes(post.id));
 
@@ -34,8 +34,8 @@ const SelectedFooter = ({ selectedPosts, onRemovePost, onSendEmail, sidebarColla
           </div>
         ))}
       </div>
-      <button className="send-email-btn" onClick={onSendEmail} disabled={sending}>
-        {sending ? 'Sending...' : 'Send Email'}
+      <button className="send-email-btn" onClick={onSendEmail}>
+        Send Email
       </button>
     </div>
   );

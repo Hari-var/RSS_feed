@@ -1,0 +1,28 @@
+.main-content {
+  margin-left: 200px;
+  width: calc(100vw - 200px);
+  padding: 20px 20px 140px 20px;
+  transition: all 0.3s ease;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.main-content.sidebar-collapsed {
+  margin-left: 70px;
+  width: calc(100vw - 70px);
+}
+
+.main-content h1 {
+  color: #333;
+  margin-bottom: 20px;
+  font-size: 18px;
+  padding: 15px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.content-area {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #0066cc;
+}
