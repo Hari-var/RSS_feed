@@ -9,6 +9,7 @@ const MainContent = ({ activeSection, sidebarCollapsed }) => {
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
+  const [isStructuredView, setIsStructuredView] = useState(false);
 
   useEffect(() => {
     const fetchRSSData = async () => {
@@ -87,7 +88,18 @@ const MainContent = ({ activeSection, sidebarCollapsed }) => {
 
   return (
     <div className={`main-content ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
-      <h1>TSC Weekly Byte - {activeSection === 'posts' ? 'Posts' : 'Events'}</h1>
+      <div className="header-section">
+        <h1>TSC Weekly Byte - {activeSection === 'posts' ? 'Posts' : 'Events'}</h1>
+        {activeSection === 'posts' && (
+          <div className="view-switch">
+            <span className={`switch-label ${!isStructuredView ? 'active' : ''}`}>Overlay</span>
+            <div className="switch-container" onClick={() => setIsStructuredView(!isStructuredView)}>
+              <div className={`switch-slider ${isStructuredView ? 'active' : ''}`}></div>
+            </div>
+            <span className={`switch-label ${isStructuredView ? 'active' : ''}`}>Structured</span>
+          </div>
+        )}
+      </div>
       {message && <div className={`message ${message.type}`}>{message.text}</div>}
       {loading ? (
         <div className="loading-container">
@@ -95,7 +107,7 @@ const MainContent = ({ activeSection, sidebarCollapsed }) => {
           <p>Loading posts...</p>
         </div>
       ) : activeSection === 'posts' ? (
-        <PostGrid selectedPosts={selectedPosts} setSelectedPosts={setSelectedPosts} posts={posts} />
+        <PostGrid selectedPosts={selectedPosts} setSelectedPosts={setSelectedPosts} posts={posts} isStructuredView={isStructuredView} />
       ) : (
         <div className="content-area">
           <p>Upcoming events will appear here...</p>

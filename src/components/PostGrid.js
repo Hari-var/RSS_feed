@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import BlogModal from './BlogModal';
 import './PostGrid.css';
 
-const PostGrid = ({ selectedPosts, setSelectedPosts, posts }) => {
+const PostGrid = ({ selectedPosts, setSelectedPosts, posts, isStructuredView }) => {
   const [modalPost, setModalPost] = useState(null);
-  const [isStructuredView, setIsStructuredView] = useState(false);
 
   const truncateDescription = (text) => {
     const words = text.split(' ');
@@ -30,15 +29,6 @@ const PostGrid = ({ selectedPosts, setSelectedPosts, posts }) => {
 
   return (
     <>
-      <div className="view-controls">
-        <div className="view-switch">
-          <span className={`switch-label ${!isStructuredView ? 'active' : ''}`}>Overlay</span>
-          <div className="switch-container" onClick={() => setIsStructuredView(!isStructuredView)}>
-            <div className={`switch-slider ${isStructuredView ? 'active' : ''}`}></div>
-          </div>
-          <span className={`switch-label ${isStructuredView ? 'active' : ''}`}>Structured</span>
-        </div>
-      </div>
       <div className={`post-grid ${isStructuredView ? 'structured' : ''}`}>
         {posts.map(post => (
           <div key={post.id} className={`post-card ${isStructuredView ? 'structured' : ''}`}>
