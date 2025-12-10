@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './BlogModal.css';
 
 const BlogModal = ({ post, isOpen, onClose, isSelected, onToggleSelect }) => {
-  const [isMaximized, setIsMaximized] = useState(false);
+  const [isMaximized, setIsMaximized] = useState(true);
   const [iframeError, setIframeError] = useState(false);
   const [showFallback, setShowFallback] = useState(false);
   useEffect(() => {

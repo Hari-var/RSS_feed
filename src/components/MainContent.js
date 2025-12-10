@@ -46,7 +46,7 @@ const MainContent = ({ activeSection, sidebarCollapsed }) => {
     setSending(true);
     const selectedData = posts.filter(post => selectedPosts.includes(post.id));
     const payload = {
-      updates: selectedData.map(post => ({
+      posts: selectedData.map(post => ({
         id: post.id,
         title: post.title,
         description: post.description,
