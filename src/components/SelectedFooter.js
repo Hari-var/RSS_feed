@@ -17,19 +17,19 @@ const SelectedFooter = ({ selectedPosts, onRemovePost, onSendEmail, sidebarColla
         {selectedData.map(post => (
           <div key={post.id} className="selected-tile">
             <button className="remove-btn" onClick={() => onRemovePost(post.id)}>×</button>
-            {!imageErrors[post.id] && post.image_url ? (
+            {!imageErrors[post.id] && (post.image_url || post.event_images) ? (
               <img 
-                src={post.image_url} 
-                alt={post.title}
+                src={post.image_url || post.event_images} 
+                alt={post.title || post.event_name}
                 onError={() => handleImageError(post.id)}
               />
             ) : (
               <div className="footer-fallback">
-                {post.title}
+                {post.title || post.event_name}
               </div>
             )}
             <div className="footer-title">
-              <span className="scrolling-text">{post.title}</span>
+              <span className="scrolling-text">{post.title || post.event_name}</span>
             </div>
           </div>
         ))}

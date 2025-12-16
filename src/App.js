@@ -4,16 +4,31 @@ import MainContent from './components/MainContent';
 import './App.css';
 
 function App() {
-  const [activeSection, setActiveSection] = useState('posts');
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [activeSection, setActiveSection] = useState(() => {
+    return localStorage.getItem('activeSection') || 'posts';
+  });
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => {
+    return localStorage.getItem('sidebarCollapsed') === 'true';
+  });
+
+  const handleSectionChange = (section) => {
+    setActiveSection(section);
+    localStorage.setItem('activeSection', section);
+  };
+
+  const handleSidebarToggle = () => {
+    const newState = !sidebarCollapsed;
+    setSidebarCollapsed(newState);
+    localStorage.setItem('sidebarCollapsed', newState.toString());
+  };
 
   return (
     <div className="App">
       <Sidebar 
         activeSection={activeSection} 
-        onSectionChange={setActiveSection}
+        onSectionChange={handleSectionChange}
         isCollapsed={sidebarCollapsed}
-        onToggle={() => setSidebarCollapsed(!sidebarCollapsed)}
+        onToggle={handleSidebarToggle}
       />
       <MainContent 
         activeSection={activeSection}
