@@ -10,6 +10,8 @@ const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection }) => {
   const [posts, setPosts] = useState([]);
   const [message, setMessage] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [postsError, setPostsError] = useState(false);
+  const [eventsError, setEventsError] = useState(false);
   const [sending, setSending] = useState(false);
   const [isStructuredView, setIsStructuredView] = useState(() => {
     return localStorage.getItem('isStructuredView') === 'true';
@@ -26,24 +28,36 @@ const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection }) => {
       }, 30000);
 
       try {
-        const postsResponse = await fetch('http://localhost:8000/rss-updates');
-        const eventsResponse = await fetch('http://localhost:8000/events');
-        const postsData = await postsResponse.json();
-        const eventsData = await eventsResponse.json();
-        const formattedPosts = postsData.updates.map(update => ({
-          id: update.id,
-          title: update.title,
-          description: update.description,
-          image_url: update.image_url,
-          blog_url: update.link,
-          source: update.source,
-          published_at: update.published
-        }));
-        setPosts(formattedPosts);
-        setEvents(eventsData.events);
+        const postsResponse = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/rss-updates');
+        const eventsResponse = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/events');
+        
+        if (!postsResponse.ok) {
+          setPostsError(true);
+        } else {
+          const postsData = await postsResponse.json();
+          const formattedPosts = postsData.updates.map(update => ({
+            id: update.id,
+            title: update.title,
+            description: update.description,
+            image_url: update.image_url,
+            blog_url: update.link,
+            source: update.source,
+            published_at: update.published
+          }));
+          setPosts(formattedPosts);
+        }
+        
+        if (!eventsResponse.ok) {
+          setEventsError(true);
+        } else {
+          const eventsData = await eventsResponse.json();
+          setEvents(eventsData.events);
+        }
+        
         clearTimeout(timeout);
       } catch (error) {
-        setMessage({ type: 'error', text: 'Failed to load posts' });
+        setPostsError(true);
+        setEventsError(true);
         clearTimeout(timeout);
       } finally {
         setLoading(false);
@@ -88,7 +102,7 @@ const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection }) => {
     }, 30000);
 
     try {
-      const response = await fetch('http://localhost:8000/generate-newsletter', {
+      const response = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/send-newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
@@ -154,6 +168,12 @@ const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection }) => {
         )}
       </div>
       {message && <div className={`message ${message.type}`}>{message.text}</div>}
+      {activeSection === 'posts' && postsError && (
+        <div className="message error">Failed to load posts</div>
+      )}
+      {activeSection === 'events' && eventsError && (
+        <div className="message error">Failed to load events</div>
+      )}
       {activeSection === 'posts' ? (
         loading ? (
           <div className="loading-container">
