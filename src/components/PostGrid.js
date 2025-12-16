@@ -38,8 +38,8 @@ const PostGrid = ({ selectedPosts, setSelectedPosts, posts, isStructuredView }) 
                   className="post-image-structured"
                   onClick={() => openModal(post)}
                   style={{
-                    backgroundImage: post.image_url ? `url(${post.image_url})` : 'none',
-                    backgroundColor: post.image_url ? 'transparent' : '#f5f5f5'
+                    backgroundImage: post.image_url ? `url(${post.image_url})` : 'url(/img13.jpg)',
+                    backgroundColor: 'transparent'
                   }}
                 >
                   <input 
@@ -64,10 +64,23 @@ const PostGrid = ({ selectedPosts, setSelectedPosts, posts, isStructuredView }) 
                 className="post-image" 
                 onClick={() => openModal(post)}
                 style={{
-                  backgroundImage: post.image_url ? `url(${post.image_url})` : 'none',
-                  backgroundColor: post.image_url ? 'transparent' : '#f5f5f5'
+                  backgroundImage: post.image_url ? `url(${post.image_url})` : 'url(/img13.jpg)',
+                  backgroundColor: 'transparent',
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  backgroundRepeat: 'no-repeat',
+                  height: '100%',
+                  margin: 0,
+                  padding: 0
                 }}
               >
+                <input 
+                  type="checkbox" 
+                  className="post-checkbox"
+                  checked={selectedPosts.includes(post.id)}
+                  onChange={() => togglePost(post.id)}
+                  onClick={e => e.stopPropagation()}
+                />
                 <input 
                   type="checkbox" 
                   className="post-checkbox"

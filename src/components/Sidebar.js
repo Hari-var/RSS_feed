@@ -16,12 +16,18 @@ const Sidebar = ({ activeSection, onSectionChange, isCollapsed, onToggle }) => {
         >
           📰 {!isCollapsed && 'Posts'}
         </button>
-        {/* <button 
+        <button 
           className={`nav-btn ${activeSection === 'events' ? 'active' : ''}`}
           onClick={() => onSectionChange('events')}
         >
           📅 {!isCollapsed && 'Events'}
-        </button> */}
+        </button>
+        <button 
+          className={`nav-btn ${activeSection === 'add-events' ? 'active' : ''}`}
+          onClick={() => onSectionChange('add-events')}
+        >
+          ➕ {!isCollapsed && 'Add Events'}
+        </button>
       </nav>
     </div>
   );

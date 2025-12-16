@@ -130,6 +130,32 @@
   font-size: 16px;
 }
 
+.events-list {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.event-card {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  border-left: 4px solid #007bff;
+}
+
+.event-card h3 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 18px;
+}
+
+.event-card p {
+  margin: 8px 0;
+  color: #666;
+  font-size: 14px;
+}
+
 @media (max-width: 768px) {
   .header-section {
     flex-direction: column;
@@ -157,5 +183,9 @@
   
   .switch-slider.active {
     transform: translateX(20px);
+  }
+  
+  .events-list {
+    grid-template-columns: 1fr;
   }
 }
