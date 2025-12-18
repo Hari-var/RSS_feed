@@ -11,7 +11,7 @@ const BlogModal = ({ post, isOpen, onClose, isSelected, onToggleSelect }) => {
       setShowFallback(false);
       
       // Auto-redirect problematic domains
-      const problematicDomains = ['infoq.com', 'machinelearning.apple.com', 'apple.com', 'technologyreview.com'];
+      const problematicDomains = ['infoq.com', 'machinelearning.apple.com', 'apple.com', 'technologyreview.com','mckinsey.com'];
       const isProblematic = problematicDomains.some(domain => post.blog_url.includes(domain));
       
       if (isProblematic) {
@@ -39,7 +39,7 @@ const BlogModal = ({ post, isOpen, onClose, isSelected, onToggleSelect }) => {
         <button className="maximize-btn" onClick={() => setIsMaximized(!isMaximized)} title={isMaximized ? "Restore" : "Maximize"}>
           {isMaximized ? '🗗' : '🗖'}
         </button>
-        <div className="modal-header">
+        {/* <div className="modal-header">
           <input 
             type="checkbox" 
             className="modal-checkbox"
@@ -47,7 +47,7 @@ const BlogModal = ({ post, isOpen, onClose, isSelected, onToggleSelect }) => {
             onChange={onToggleSelect}
             title="Select this post"
           />
-        </div>
+        </div> */}
         {!iframeError ? (
           <div className="iframe-container">
             <iframe 
