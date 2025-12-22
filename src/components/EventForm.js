@@ -73,7 +73,7 @@ const EventForm = ({ onAddEvent, onNavigateToEvents }) => {
         formDataToSend.append('presenter_images', formData.presenter_images);
       }
 
-      const response = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/events', {
+      const response = await fetch('http://localhost:8000/events', {
         method: 'POST',
         body: formDataToSend
       });

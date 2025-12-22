@@ -1,0 +1,107 @@
+.admin-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: #fff;
+}
+
+.admin-header {
+  padding: 24px 0 0 0;
+  border-bottom: 1px solid #dadce0;
+}
+
+.admin-header h1 {
+  margin: 0 0 24px 0;
+  color: #202124;
+  font-size: 28px;
+  font-weight: 400;
+  padding: 0 24px;
+}
+
+.admin-tabs {
+  display: flex;
+  margin: 0;
+}
+
+.tab-btn {
+  padding: 12px 24px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  color: #5f6368;
+  border-bottom: 2px solid transparent;
+  font-weight: 500;
+}
+
+.tab-btn:hover {
+  color: #1a73e8;
+}
+
+.tab-btn.active {
+  color: #1a73e8;
+  border-bottom-color: #1a73e8;
+}
+
+.admin-content {
+  padding: 24px;
+}
+
+.account-management h2 {
+  margin: 0 0 24px 0;
+  color: #202124;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.user-details {
+  background: #f8f9fa;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #e8eaed;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-item label {
+  font-weight: 500;
+  color: #202124;
+  font-size: 14px;
+}
+
+.detail-item span {
+  color: #5f6368;
+  font-size: 14px;
+}
+
+.account-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.logout-btn {
+  padding: 10px 24px;
+  background: #d93025;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  width: auto;
+  height: 40px;
+}
+
+.logout-btn:hover {
+  background: #c5221f;
+}

@@ -3,9 +3,10 @@ import PostGrid from './PostGrid';
 import SelectedFooter from './SelectedFooter';
 import EventForm from './EventForm';
 import EventGrid from './EventGrid';
+import Admin from './Admin';
 import './MainContent.css';
 
-const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection }) => {
+const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection, onLogout }) => {
   const [selectedPosts, setSelectedPosts] = useState([]);
   const [posts, setPosts] = useState([]);
   const [message, setMessage] = useState(null);
@@ -22,16 +23,10 @@ const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection }) => {
 
   useEffect(() => {
     const fetchRSSData = async () => {
-      const timeout = setTimeout(() => {
-        setLoading(false);
-        setMessage({ type: 'error', text: 'Request timeout. Please try again.' });
-      }, 30000);
-
       try {
-        const postsResponse = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/rss-updates');
-        const eventsResponse = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/events');
-        const externalEventsResponse = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/external-events');
-        clearTimeout(timeout);
+        const postsResponse = await fetch('http://localhost:8000/rss-updates');
+        const eventsResponse = await fetch('http://localhost:8000/events');
+        const externalEventsResponse = await fetch('http://localhost:8000/external-events');
         const postsData = await postsResponse.json();
         const eventsData = await eventsResponse.json();
         const externalEventsData = await externalEventsResponse.json();
@@ -52,14 +47,22 @@ const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection }) => {
         }));
         setExternalEvents(formattedExternalEvents);
       } catch (error) {
-        setMessage({ type: 'error', text: 'Failed to load posts' });
-        clearTimeout(timeout);
+        setMessage({ type: 'error', text: 'Failed to load data' });
       } finally {
         setLoading(false);
       }
     };
 
     fetchRSSData();
+  }, []);
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setIsStructuredView(localStorage.getItem('isStructuredView') === 'true');
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
   const handleSendEmail = async () => {
@@ -102,19 +105,12 @@ const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection }) => {
       }))
     };
 
-    const timeout = setTimeout(() => {
-      setSending(false);
-      setMessage({ type: 'error', text: 'Request timeout. Please try again.' });
-      setTimeout(() => setMessage(null), 3000);
-    }, 30000);
-
     try {
-      const response = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/send-newsletter', {
+      const response = await fetch('http://localhost:8000/send-newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-      clearTimeout(timeout);
       if (response.ok) {
         setMessage({ type: 'success', text: 'Newsletter sent successfully!' });
         setSelectedPosts([]);
@@ -125,7 +121,6 @@ const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection }) => {
         setMessage({ type: 'error', text: 'Failed to send newsletter' });
       }
     } catch (error) {
-      clearTimeout(timeout);
       setMessage({ type: 'error', text: 'Error sending newsletter' });
     } finally {
       setSending(false);
@@ -160,24 +155,18 @@ const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection }) => {
 
   return (
     <div className={`main-content ${sidebarCollapsed ? 'sidebar-collapsed' : ''}`}>
-      <div className="header-section">
-        <h1>TSC Weekly Byte - {activeSection === 'posts' ? 'Posts' : activeSection === 'events' ? 'Events' : activeSection === 'external-events' ? 'External Events' : 'Add Events'}</h1>
-        {(activeSection === 'posts' || activeSection === 'events' || activeSection === 'external-events') && (
-          <div className="view-switch">
-            <span className={`switch-label ${!isStructuredView ? 'active' : ''}`}>Overlay</span>
-            <div className="switch-container" onClick={() => {
-              const newView = !isStructuredView;
-              setIsStructuredView(newView);
-              localStorage.setItem('isStructuredView', newView.toString());
-            }}>
-              <div className={`switch-slider ${isStructuredView ? 'active' : ''}`}></div>
-            </div>
-            <span className={`switch-label ${isStructuredView ? 'active' : ''}`}>Structured</span>
+      {activeSection !== 'admin' && (
+        <div className="header-section">
+          <h1>TSC Weekly Byte - {activeSection === 'posts' ? 'Posts' : activeSection === 'events' ? 'Events' : activeSection === 'external-events' ? 'External Events' : 'Add Events'}</h1>
+          <div className="view-indicator">
+            <span className="current-view">{isStructuredView ? '📋 Structured View' : '🖼️ Overlay View'}</span>
           </div>
-        )}
-      </div>
+        </div>
+      )}
       {message && <div className={`message ${message.type}`}>{message.text}</div>}
-      {activeSection === 'posts' ? (
+      {activeSection === 'admin' ? (
+        <Admin onLogout={onLogout} />
+      ) : activeSection === 'posts' ? (
         loading ? (
           <div className="loading-container">
             <div className="spinner"></div>
@@ -223,7 +212,7 @@ const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection }) => {
         )
       )}
 
-      {selectedItems.length > 0 && (
+      {selectedItems.length > 0 && activeSection !== 'admin' && (
         <SelectedFooter 
           selectedPosts={selectedItems.map(item => item.id)}
           onRemovePost={handleRemoveItem}

@@ -125,6 +125,19 @@ const EventGrid = ({ events, isStructuredView, selectedEvents, setSelectedEvents
                     <img src={event.presenter_images} alt={event.presenter} />
                   </div>
                 )}
+                <div className="post-overlay">
+                  <h4 className="post-title">{event.event_name}</h4>
+                  <p className="post-description">by {event.presenter}</p>
+                  <div className="post-meta">
+                    <span className="source-info">{event.event_type}</span>
+                    {event.date_time && (
+                      <span className="published-date">{new Date(event.date_time).toLocaleDateString()}</span>
+                    )}
+                  </div>
+                  {event.invite_location && (
+                    <div className="event-location">{event.invite_location}</div>
+                  )}
+                </div>
                 <input 
                   type="checkbox" 
                   className="post-checkbox"

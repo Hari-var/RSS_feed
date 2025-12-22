@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
 import Sidebar from './components/Sidebar';
 import MainContent from './components/MainContent';
+import Login from './components/Login';
 import './App.css';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem('isLoggedIn') === 'true';
+  });
   const [activeSection, setActiveSection] = useState(() => {
     return localStorage.getItem('activeSection') || 'posts';
   });
@@ -22,6 +26,15 @@ function App() {
     localStorage.setItem('sidebarCollapsed', newState.toString());
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('isLoggedIn');
+    setIsLoggedIn(false);
+  };
+
+  if (!isLoggedIn) {
+    return <Login setIsLoggedIn={setIsLoggedIn} />;
+  }
+
   return (
     <div className="App">
       <Sidebar 
@@ -33,6 +46,8 @@ function App() {
       <MainContent 
         activeSection={activeSection}
         sidebarCollapsed={sidebarCollapsed}
+        setActiveSection={setActiveSection}
+        onLogout={handleLogout}
       />
     </div>
   );
