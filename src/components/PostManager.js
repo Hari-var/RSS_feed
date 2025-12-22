@@ -14,7 +14,10 @@ const PostManager = () => {
 
   const fetchSources = async () => {
     try {
-      const response = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/sources/');
+      const response = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/sources',  {
+        method: 'GET',
+        redirect: 'follow'
+      });
       console.log('Response status:', response.status);
       if (response.ok) {
         const data = await response.json();
@@ -36,7 +39,7 @@ const PostManager = () => {
     if (!newSource.name || !newSource.url) return;
 
     try {
-      const response = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/sources/', {
+      const response = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/sources', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: newSource.name, url: newSource.url })
