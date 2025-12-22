@@ -14,7 +14,7 @@ const PostManager = () => {
 
   const fetchSources = async () => {
     try {
-      const response = await fetch('http://localhost:8000/sources/');
+      const response = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/sources/');
       console.log('Response status:', response.status);
       if (response.ok) {
         const data = await response.json();
@@ -36,7 +36,7 @@ const PostManager = () => {
     if (!newSource.name || !newSource.url) return;
 
     try {
-      const response = await fetch('http://localhost:8000/sources/', {
+      const response = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/sources/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: newSource.name, url: newSource.url })
@@ -61,7 +61,7 @@ const PostManager = () => {
 
   const handleUpdateSource = async () => {
   try {
-    const response = await fetch(`http://localhost:8000/sources/${editingSource.oldName}`, {
+    const response = await fetch(`https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/sources/${editingSource.oldName}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
@@ -91,7 +91,7 @@ const PostManager = () => {
     if (!window.confirm(`Are you sure you want to delete "${name}"?`)) return;
 
     try {
-      const response = await fetch(`http://localhost:8000/sources/${name}`, {
+      const response = await fetch(`https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/sources/${name}`, {
         method: 'DELETE'
       });
 

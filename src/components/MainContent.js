@@ -24,9 +24,9 @@ const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection, onLogo
   useEffect(() => {
     const fetchRSSData = async () => {
       try {
-        const postsResponse = await fetch('http://localhost:8000/rss-updates');
-        const eventsResponse = await fetch('http://localhost:8000/events');
-        const externalEventsResponse = await fetch('http://localhost:8000/external-events');
+        const postsResponse = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/rss-updates');
+        const eventsResponse = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/events');
+        const externalEventsResponse = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/external-events');
         const postsData = await postsResponse.json();
         const eventsData = await eventsResponse.json();
         const externalEventsData = await externalEventsResponse.json();
@@ -106,7 +106,7 @@ const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection, onLogo
     };
 
     try {
-      const response = await fetch('http://localhost:8000/send-newsletter', {
+      const response = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/send-newsletter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

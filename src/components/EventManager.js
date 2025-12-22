@@ -14,7 +14,7 @@ const EventManager = ({ events, setEvents, loading, onRefresh }) => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`http://localhost:8000/events/${editingEvent.id}`, {
+      const response = await fetch(`https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/events/${editingEvent.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -41,7 +41,7 @@ const EventManager = ({ events, setEvents, loading, onRefresh }) => {
     if (!window.confirm('Are you sure you want to delete this event?')) return;
 
     try {
-      const response = await fetch(`http://localhost:8000/events/${eventId}`, {
+      const response = await fetch(`https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/events/${eventId}`, {
         method: 'DELETE'
       });
 

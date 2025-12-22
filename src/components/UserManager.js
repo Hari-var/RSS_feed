@@ -13,7 +13,7 @@ const UserManager = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch('http://localhost:8000/users');
+      const response = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/users');
       if (response.ok) {
         const data = await response.json();
         setUsers(data.users || []);
@@ -27,7 +27,7 @@ const UserManager = () => {
 
   const handleAddUser = async () => {
     try {
-      const response = await fetch('http://localhost:8000/users', {
+      const response = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newUser)
@@ -51,7 +51,7 @@ const UserManager = () => {
     if (!window.confirm('Are you sure you want to delete this user?')) return;
 
     try {
-      const response = await fetch(`http://localhost:8000/users/${userId}`, {
+      const response = await fetch(`https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/users/${userId}`, {
         method: 'DELETE'
       });
 

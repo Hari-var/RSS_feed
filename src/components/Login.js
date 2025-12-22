@@ -13,7 +13,7 @@ const Login = ({ setIsLoggedIn }) => {
     setError(null);
 
     try {
-      const response = await fetch('http://localhost:8000/login', {
+      const response = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/login', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/x-www-form-urlencoded'
