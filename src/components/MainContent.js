@@ -10,7 +10,11 @@ const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection, onLogo
   const [selectedPosts, setSelectedPosts] = useState([]);
   const [posts, setPosts] = useState([]);
   const [message, setMessage] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState({
+    posts: true,
+    events: true,
+    externalEvents: true
+  });
   const [sending, setSending] = useState(false);
   const [isStructuredView, setIsStructuredView] = useState(() => {
     return localStorage.getItem('isStructuredView') === 'true';
@@ -22,14 +26,10 @@ const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection, onLogo
   const [selectedExternalEvents, setSelectedExternalEvents] = useState([]);
 
   useEffect(() => {
-    const fetchRSSData = async () => {
+    const fetchPosts = async () => {
       try {
         const postsResponse = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/rss-updates');
-        const eventsResponse = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/events');
-        const externalEventsResponse = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/external-events');
         const postsData = await postsResponse.json();
-        const eventsData = await eventsResponse.json();
-        const externalEventsData = await externalEventsResponse.json();
         const formattedPosts = postsData.updates.map(update => ({
           id: update.id,
           title: update.title,
@@ -40,20 +40,45 @@ const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection, onLogo
           published_at: update.published
         }));
         setPosts(formattedPosts);
+      } catch (error) {
+        console.error('Failed to load posts:', error);
+      } finally {
+        setLoading(prev => ({ ...prev, posts: false }));
+      }
+    };
+
+    const fetchEvents = async () => {
+      try {
+        const eventsResponse = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/events');
+        const eventsData = await eventsResponse.json();
         setEvents(eventsData.events);
+      } catch (error) {
+        console.error('Failed to load events:', error);
+      } finally {
+        setLoading(prev => ({ ...prev, events: false }));
+      }
+    };
+
+    const fetchExternalEvents = async () => {
+      try {
+        const externalEventsResponse = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/external-events');
+        const externalEventsData = await externalEventsResponse.json();
         const formattedExternalEvents = externalEventsData.events.map((event, index) => ({
           ...event,
           id: event.id || `external-${index}-${Date.now()}`
         }));
         setExternalEvents(formattedExternalEvents);
       } catch (error) {
-        setMessage({ type: 'error', text: 'Failed to load data' });
+        console.error('Failed to load external events:', error);
+        setExternalEvents([]);
       } finally {
-        setLoading(false);
+        setLoading(prev => ({ ...prev, externalEvents: false }));
       }
     };
 
-    fetchRSSData();
+    fetchPosts();
+    fetchEvents();
+    fetchExternalEvents();
   }, []);
 
   useEffect(() => {
@@ -167,7 +192,7 @@ const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection, onLogo
       {activeSection === 'admin' ? (
         <Admin onLogout={onLogout} />
       ) : activeSection === 'posts' ? (
-        loading ? (
+        loading.posts ? (
           <div className="loading-container">
             <div className="spinner"></div>
             <p>Loading posts...</p>
@@ -185,7 +210,7 @@ const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection, onLogo
           onNavigateToEvents={() => setActiveSection('events')}
         />
       ) : activeSection === 'external-events' ? (
-        loading ? (
+        loading.externalEvents ? (
           <div className="loading-container">
             <div className="spinner"></div>
             <p>Loading external events...</p>
@@ -198,7 +223,7 @@ const MainContent = ({ activeSection, sidebarCollapsed, setActiveSection, onLogo
           }} />
         )
       ) : (
-        loading ? (
+        loading.events ? (
           <div className="loading-container">
             <div className="spinner"></div>
             <p>Loading events...</p>
