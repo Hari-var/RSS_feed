@@ -16,7 +16,7 @@ const Admin = ({ onLogout, setActiveSection }) => {
 
   const fetchEvents = async () => {
     try {
-      const response = await fetch('http://localhost:8000/events');
+      const response = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/events');
       const data = await response.json();
       setEvents(data.events);
     } catch (error) {

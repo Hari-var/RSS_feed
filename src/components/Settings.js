@@ -24,7 +24,7 @@ const Settings = ({ onLogout }) => {
 
   const fetchSettings = async () => {
     try {
-      const response = await fetch('http://localhost:8000/config');
+      const response = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/config');
       if (response.ok) {
         const data = await response.json();
         setSettings(prev => ({ ...prev, emailConfig: data }));
@@ -36,7 +36,7 @@ const Settings = ({ onLogout }) => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch('http://localhost:8000/config', {
+      const response = await fetch('https://rss-feed-backend-e6gvd8bnfugscucb.canadacentral-01.azurewebsites.net/config', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(settings.emailConfig)
