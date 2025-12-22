@@ -106,7 +106,8 @@
   z-index: 2;
 }
 
-.content-overlay {
+.content-overlay,
+.post-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -121,14 +122,18 @@
   box-sizing: border-box;
 }
 
-.content-overlay h4 {
+.content-overlay h4,
+.post-overlay h4 {
   margin: 0 0 8px 0;
   font-size: 14px;
   font-weight: 600;
   line-height: 1.3;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
 }
 
-.content-overlay p {
+.content-overlay p,
+.post-overlay p {
   margin: 0 0 10px 0;
   font-size: 14px;
   line-height: 1.4;
@@ -152,6 +157,13 @@
 
 .published-date {
   color: #bbb;
+}
+
+.event-location {
+  color: #ddd;
+  font-size: 11px;
+  margin-top: 5px;
+  font-style: italic;
 }
 
 .post-image-structured {

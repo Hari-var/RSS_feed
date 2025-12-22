@@ -34,6 +34,12 @@ const Sidebar = ({ activeSection, onSectionChange, isCollapsed, onToggle }) => {
         >
           ➕ {!isCollapsed && 'Add Events'}
         </button>
+        <button 
+          className={`nav-btn ${activeSection === 'admin' ? 'active' : ''}`}
+          onClick={() => onSectionChange('admin')}
+        >
+          ⚙️ {!isCollapsed && 'Settings'}
+        </button>
       </nav>
     </div>
   );

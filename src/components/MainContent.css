@@ -21,6 +21,21 @@
   border-bottom: 1px solid #e0e0e0;
 }
 
+.view-indicator {
+  display: flex;
+  align-items: center;
+}
+
+.current-view {
+  font-size: 14px;
+  color: #007bff;
+  background: #f0f8ff;
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid #007bff;
+  font-weight: 500;
+}
+
 .main-content h1 {
   color: #333;
   margin: 0;
