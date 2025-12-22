@@ -21,14 +21,20 @@ const Login = ({ setIsLoggedIn }) => {
         body: new URLSearchParams({
           username: username,
           password: password,
-        }),
-        credentials: 'include',
+        })
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response ok:', response.ok);
+      
       const data = await response.json();
+      console.log('Login response data:', data);
       
       if (response.ok) {
         localStorage.setItem('isLoggedIn', 'true');
+        if (data.role) {
+          localStorage.setItem('userRole', data.role);
+        }
         setIsLoggedIn(true);
       } else {
         // Handle validation errors or other error formats
