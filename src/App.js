@@ -20,7 +20,7 @@ function App() {
     localStorage.setItem('activeSection', section);
   };
 
-  const handleSidebarToggle = () => {
+  const handlesidebarToggle = () => {
     const newState = !sidebarCollapsed;
     setSidebarCollapsed(newState);
     localStorage.setItem('sidebarCollapsed', newState.toString());
