@@ -20,13 +20,13 @@ function App() {
     localStorage.setItem('activeSection', section);
   };
 
-  const handlesidebarToggle = () => {
+  const handleSidebarToggle = () => {
     const newState = !sidebarCollapsed;
     setSidebarCollapsed(newState);
     localStorage.setItem('sidebarCollapsed', newState.toString());
   };
 
-  const handleLogout = () => {
+  const handlelogout = () => {
     localStorage.removeItem('isLoggedIn');
     setIsLoggedIn(false);
   };
