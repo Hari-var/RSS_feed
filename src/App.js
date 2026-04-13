@@ -15,7 +15,7 @@ function App() {
     return localStorage.getItem('sidebarCollapsed') === 'true';
   });
 
-  const handleSectionChange = (section) => {
+  const handlesectionChange = (section) => {
     setActiveSection(section);
     localStorage.setItem('activeSection', section);
   };
