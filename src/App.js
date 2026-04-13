@@ -26,7 +26,7 @@ function App() {
     localStorage.setItem('sidebarCollapsed', newState.toString());
   };
 
-  const handleLogout = () => {
+  const handlelogout = () => {
     localStorage.removeItem('isLoggedIn');
     setIsLoggedIn(false);
   };
